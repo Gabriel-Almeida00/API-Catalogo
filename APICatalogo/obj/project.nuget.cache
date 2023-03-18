@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "eeUzO5VAN8t1mfuJVAXV91oDyuzi7zku4igfZ+huBKl4ZPeQ3/s/ZPOz1S77ym+igG6jzqzXb1hthiER1eeExw==",
+  "dgSpecHash": "s78+z3MOgJ8JhyiwWPSGyrl2oYlrSvq7C4njjCUWtv1zhB0gqWF9JjIIIJFmIkp7dxtkzW3tE5lKx4+AnHO4jg==",
   "success": true,
   "projectFilePath": "C:\\workspace-visual-studio-code\\APICatalogo\\APICatalogo\\APICatalogo.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\Gabriel\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.1\\microsoft.entityframeworkcore.analyzers.6.0.1.nupkg.sha512",
     "C:\\Users\\Gabriel\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.1\\microsoft.entityframeworkcore.design.6.0.1.nupkg.sha512",
     "C:\\Users\\Gabriel\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.1\\microsoft.entityframeworkcore.relational.6.0.1.nupkg.sha512",
+    "C:\\Users\\Gabriel\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\6.0.1\\microsoft.entityframeworkcore.tools.6.0.1.nupkg.sha512",
     "C:\\Users\\Gabriel\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\Gabriel\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\Gabriel\\.nuget\\packages\\microsoft.extensions.caching.memory\\6.0.0\\microsoft.extensions.caching.memory.6.0.0.nupkg.sha512",
