@@ -25,3 +25,10 @@ C:\workspace-visual-studio-code\APICatalogo\APICatalogo\obj\Debug\net6.0\refint\
 C:\workspace-visual-studio-code\APICatalogo\APICatalogo\obj\Debug\net6.0\APICatalogo.pdb
 C:\workspace-visual-studio-code\APICatalogo\APICatalogo\obj\Debug\net6.0\APICatalogo.genruntimeconfig.cache
 C:\workspace-visual-studio-code\APICatalogo\APICatalogo\obj\Debug\net6.0\ref\APICatalogo.dll
+C:\workspace-visual-studio-code\APICatalogo\APICatalogo\bin\Debug\net6.0\Humanizer.dll
+C:\workspace-visual-studio-code\APICatalogo\APICatalogo\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\workspace-visual-studio-code\APICatalogo\APICatalogo\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\workspace-visual-studio-code\APICatalogo\APICatalogo\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\workspace-visual-studio-code\APICatalogo\APICatalogo\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\workspace-visual-studio-code\APICatalogo\APICatalogo\bin\Debug\net6.0\MySqlConnector.dll
+C:\workspace-visual-studio-code\APICatalogo\APICatalogo\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
