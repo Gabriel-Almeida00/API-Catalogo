@@ -1,6 +1,8 @@
 using APICatalogo.Context;
 using APICatalogo.Filters;
+using APICatalogo.Implementation;
 using APICatalogo.Logging;
+using APICatalogo.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -12,6 +14,8 @@ builder.Services.AddControllers()
     .AddJsonOptions(options => 
               options.JsonSerializerOptions
                 .ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<ApiLoggingFilter>();
 builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration
