@@ -1,6 +1,6 @@
 ﻿using APICatalogo.Context;
+using APICatalogo.Filters;
 using APICatalogo.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,17 +10,17 @@ namespace APICatalogo.Controllers
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-        private readonly AppDbContext _context; 
-
+        private readonly AppDbContext _context;
         public ProdutosController(AppDbContext context)
         {
             _context = context;
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(ApiLoggingFilter))]
         public ActionResult<IEnumerable<Produto>> Get()
         {
-            var produtos = _context.Produtos.ToList();
+            var produtos = _context.Produtos.AsNoTracking().ToList();
             if (produtos is null)
             {
                 return NotFound();
@@ -28,11 +28,11 @@ namespace APICatalogo.Controllers
             return produtos;
         }
 
-        [HttpGet("{id:int}", Name = "ObterProduto")]
+        [HttpGet("{id:int}", Name="ObterProduto")]
         public ActionResult<Produto> Get(int id)
         {
             var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
-            if (produto is null)
+            if(produto is null)
             {
                 return NotFound("Produto não encontrado...");
             }
@@ -48,14 +48,14 @@ namespace APICatalogo.Controllers
             _context.Produtos.Add(produto);
             _context.SaveChanges();
 
-            return new CreatedAtRouteResult("ObterProduto",
+            return new CreatedAtRouteResult("ObterProduto", 
                 new { id = produto.ProdutoId }, produto);
-        }
+       }
 
         [HttpPut("{id:int}")]
         public ActionResult Put(int id, Produto produto)
         {
-            if (id != produto.ProdutoId)
+            if(id != produto.ProdutoId)
             {
                 return BadRequest();
             }
@@ -72,7 +72,7 @@ namespace APICatalogo.Controllers
             var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
             //var produto = _context.Produtos.Find(id);
 
-            if (produto is null)
+            if(produto is null)
             {
                 return NotFound("Produto não localizado...");
             }

@@ -1,4 +1,5 @@
 using APICatalogo.Context;
+using APICatalogo.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -10,6 +11,8 @@ builder.Services.AddControllers()
     .AddJsonOptions(options => 
               options.JsonSerializerOptions
                 .ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+builder.Services.AddScoped<ApiLoggingFilter>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
