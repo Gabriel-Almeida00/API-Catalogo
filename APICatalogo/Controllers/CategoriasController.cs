@@ -13,9 +13,10 @@ namespace APICatalogo.Controllers
         private readonly AppDbContext _context;
         private readonly ILogger _logger;
 
-        public CategoriasController(AppDbContext context)
+        public CategoriasController(AppDbContext context,ILogger<CategoriasController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet("produtos")]
@@ -23,6 +24,7 @@ namespace APICatalogo.Controllers
         {
             try
             {
+                _logger.LogInformation("===========GET===========");
                 return _context.Categorias.Include(p => p.Produtos).ToList();
             }
             catch (Exception)
