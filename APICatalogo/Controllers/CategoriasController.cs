@@ -1,5 +1,7 @@
-﻿using APICatalogo.Models;
+﻿using APICatalogo.DTOs;
+using APICatalogo.Models;
 using APICatalogo.Repository;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APICatalogo.Controllers
@@ -9,123 +11,93 @@ namespace APICatalogo.Controllers
     public class CategoriasController : ControllerBase
     {
         private readonly IUnitOfWork _uof;
-        public CategoriasController(IUnitOfWork context)
+        private readonly IMapper _mapper;
+        public CategoriasController(IUnitOfWork context, IMapper mapper)
         {
             _uof = context;
+            _mapper = mapper;
         }
 
         [HttpGet("produtos")]
-        public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
+        public ActionResult<IEnumerable<CategoriaDTO>> GetCategoriasProdutos()
         {
-            try
-            {
-                return _uof.CategoriaRepository.GetCategoriasProdutos().ToList();
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um problema ao tratar a sua solicitação.");
-            }
+            var categoria = _uof.CategoriaRepository.GetCategoriasProdutos().ToList();
+            var categoriaDTO = _mapper.Map<List<CategoriaDTO>>(categoria);
+
+            return categoriaDTO;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Categoria>> Get()
+        public ActionResult<IEnumerable<CategoriaDTO>> Get()
         {
-            try
-            {
-                var categorias = _uof.CategoriaRepository.Get().ToList();
-                return categorias;
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um problema ao tratar a sua solicitação.");
-            }
+            var categoria = _uof.ProdutoRepository.Get().ToList();
+            var categoriaDTO = _mapper.Map<List<CategoriaDTO>>(categoria);
 
+            return categoriaDTO;
         }
 
         [HttpGet("{id:int}", Name = "ObterCategoria")]
-        public ActionResult<Categoria> Get(int id)
+        public ActionResult<CategoriaDTO> Get(int id)
         {
-            try
+            var categoria = _uof.CategoriaRepository.GetById(p => p.CategoriaId == id);
+            if (categoria is null)
             {
-                var categoria = _uof.CategoriaRepository.GetById(p => p.CategoriaId == id);
+                return NotFound("Categoria não encontrada...");
+            }
 
-                if (categoria == null)
-                {
-                    return NotFound($"Categoria com id= {id} não encontrada...");
-                }
-                return Ok(categoria);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                           "Ocorreu um problema ao tratar a sua solicitação.");
-            }
+            var categoriaDTO = _mapper.Map<CategoriaDTO>(categoria);
+            return categoriaDTO;
         }
 
         [HttpPost]
-        public ActionResult Post(Categoria categoria)
+        public ActionResult Post(CategoriaDTO categoriaDto)
         {
-            try
-            {
-                if (categoria is null)
-                    return BadRequest("Dados inválidos");
+            if (categoriaDto is null)
+                return BadRequest();
 
-                _uof.CategoriaRepository.Add(categoria);
-                _uof.Commit();
+            var categoria = _mapper.Map<Categoria>(categoriaDto);
 
-                return new CreatedAtRouteResult("ObterCategoria",
-                    new { id = categoria.CategoriaId }, categoria);
+            _uof.CategoriaRepository.Add(categoria);
+            _uof.Commit();
 
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                          "Ocorreu um problema ao tratar a sua solicitação.");
-            }
+            var categoriaDTO = _mapper.Map<CategoriaDTO>(categoria);
+
+            return new CreatedAtRouteResult("ObterCategoria",
+                new { id = categoria.CategoriaId }, categoriaDTO);
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult Put(int id, Categoria categoria)
+        public ActionResult Put(int id, CategoriaDTO categoriaDto)
         {
-            try
+            if (id != categoriaDto.CategoriaId)
             {
-                if (id != categoria.CategoriaId)
-                {
-                    return BadRequest("Dados inválidos");
-                }
-                _uof.CategoriaRepository.Update(categoria);
-                _uof.Commit();
-                return Ok(categoria);
+                return BadRequest();
             }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                       "Ocorreu um problema ao tratar a sua solicitação.");
-            }
+
+            var categoria = _mapper.Map<Categoria>(categoriaDto);
+
+            _uof.CategoriaRepository.Update(categoria);
+            _uof.Commit();
+
+            return Ok(categoria);
         }
 
         [HttpDelete("{id:int}")]
-        public ActionResult Delete(int id)
+        public ActionResult<CategoriaDTO> Delete(int id)
         {
-            try
-            {
-                var categoria = _uof.CategoriaRepository.GetById(p => p.CategoriaId == id);
+            var categoria = _uof.CategoriaRepository.GetById(p => p.CategoriaId == id);
+            //var produto = _uof.Produtos.Find(id);
 
-                if (categoria == null)
-                {
-                    return NotFound($"Categoria com id={id} não encontrada...");
-                }
-                _uof.CategoriaRepository.Delete(categoria);
-                _uof.Commit();
-                return Ok(categoria);
-            }
-            catch (Exception)
+            if (categoria is null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                               "Ocorreu um problema ao tratar a sua solicitação.");
+                return NotFound("Produto não localizado...");
             }
+            _uof.CategoriaRepository.Delete(categoria);
+            _uof.Commit();
+
+            var categoriaDTO = _mapper.Map<CategoriaDTO>(categoria);
+
+            return Ok(categoriaDTO);
         }
     }
 }
