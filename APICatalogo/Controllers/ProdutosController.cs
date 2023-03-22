@@ -1,5 +1,4 @@
 ﻿using APICatalogo.Context;
-using APICatalogo.Filters;
 using APICatalogo.Models;
 using APICatalogo.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +11,13 @@ namespace APICatalogo.Controllers
     public class ProdutosController : ControllerBase
     {
         private readonly IUnitOfWork _uof;
-        public ProdutosController(IUnitOfWork context)
+        public ProdutosController(IUnitOfWork contexto)
         {
-            _uof = context;
+            _uof = contexto;
         }
 
-        [HttpGet("preco")]
-        public ActionResult<IEnumerable<Produto>> GetProdutosPrecos()
+        [HttpGet("menorpreco")]
+        public ActionResult<IEnumerable<Produto>> GetProdutosPreco()
         {
             return _uof.ProdutoRepository.GetProdutosPorPreco().ToList();
         }
@@ -34,11 +33,11 @@ namespace APICatalogo.Controllers
             return produtos;
         }
 
-        [HttpGet("{id:int}", Name="ObterProduto")]
+        [HttpGet("{id:int}", Name = "ObterProduto")]
         public ActionResult<Produto> Get(int id)
         {
-            var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
-            if(produto is null)
+            var produto = _uof.ProdutoRepository.GetById(p=> p.ProdutoId ==id);
+            if (produto is null)
             {
                 return NotFound("Produto não encontrado...");
             }
@@ -54,14 +53,15 @@ namespace APICatalogo.Controllers
             _uof.ProdutoRepository.Add(produto);
             _uof.Commit();
 
-            return new CreatedAtRouteResult("ObterProduto", 
+            return new CreatedAtRouteResult("ObterProduto",
                 new { id = produto.ProdutoId }, produto);
-       }
+        }
 
         [HttpPut("{id:int}")]
+        //Usar [FromBody] é opcional
         public ActionResult Put(int id, Produto produto)
         {
-            if(id != produto.ProdutoId)
+            if (id != produto.ProdutoId)
             {
                 return BadRequest();
             }
@@ -69,16 +69,16 @@ namespace APICatalogo.Controllers
             _uof.ProdutoRepository.Update(produto);
             _uof.Commit();
 
-            return Ok();
+            return Ok(produto);
         }
 
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)
         {
             var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
-            
+            //var produto = _uof.Produtos.Find(id);
 
-            if(produto is null)
+            if (produto is null)
             {
                 return NotFound("Produto não localizado...");
             }

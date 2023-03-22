@@ -1,9 +1,6 @@
-﻿using APICatalogo.Context;
-using APICatalogo.Models;
+﻿using APICatalogo.Models;
 using APICatalogo.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace APICatalogo.Controllers
 {
@@ -22,7 +19,7 @@ namespace APICatalogo.Controllers
         {
             try
             {
-                return _uof.Categorias.Include(p => p.Produtos).ToList();
+                return _uof.CategoriaRepository.GetCategoriasProdutos().ToList();
             }
             catch (Exception)
             {
@@ -36,7 +33,8 @@ namespace APICatalogo.Controllers
         {
             try
             {
-                return _uof.Categorias.AsNoTracking().ToList();
+                var categorias = _uof.CategoriaRepository.Get().ToList();
+                return categorias;
             }
             catch (Exception)
             {
