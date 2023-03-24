@@ -14,9 +14,9 @@ namespace APICatalogo.RepositoryImpl
             contentx = contentx;
         }
 
-        public  IEnumerable<Produto> GetProdutoByNome(string nome)
+        public async  Task<IEnumerable<Produto>> GetProdutoByNome(string nome)
         {
-            return Get().Where(x => x.Nome.Contains(nome));
+            return await Get().Where(x => x.Nome.Contains(nome)).ToListAsync();
         }
 
         public PagedList<Produto> GetProdutos(ProdutosParameters produtosParameters)
@@ -25,9 +25,9 @@ namespace APICatalogo.RepositoryImpl
                 produtosParameters.PageNumber, produtosParameters.PageSize);
         }
 
-        public IEnumerable<Produto> GetProdutosPorPreco()
+        public async Task<IEnumerable<Produto>> GetProdutosPorPreco()
         {
-            return Get().OrderBy(c => c.Preco).ToList();
+            return await Get().OrderBy(c => c.Preco).ToListAsync();
         }
     }
 }
