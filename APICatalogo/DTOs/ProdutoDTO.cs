@@ -8,5 +8,8 @@
         public decimal Preco { get; set; }
         public string? ImagemUrl { get; set; }
         public int CategoriaId { get; set; }
+        public DateTime DataCadastro { get; set; }
+        public float Estoque { get; set; }
+
     }
 }
