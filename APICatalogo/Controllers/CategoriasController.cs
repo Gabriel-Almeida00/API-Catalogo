@@ -30,7 +30,7 @@ namespace APICatalogo.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<CategoriaDTO>> Get()
         {
-            var categoria = _uof.ProdutoRepository.Get().ToList();
+            var categoria = _uof.CategoriaRepository.Get().ToList();
             var categoriaDTO = _mapper.Map<List<CategoriaDTO>>(categoria);
 
             return categoriaDTO;
