@@ -34,3 +34,4 @@ C:\workspace-visual-studio-code\APICatalogo\APICatalogo\bin\Debug\net6.0\MySqlCo
 C:\workspace-visual-studio-code\APICatalogo\APICatalogo\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\workspace-visual-studio-code\APICatalogo\APICatalogo\bin\Debug\net6.0\AutoMapper.dll
 C:\workspace-visual-studio-code\APICatalogo\APICatalogo\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\workspace-visual-studio-code\APICatalogo\APICatalogo\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
