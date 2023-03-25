@@ -32,7 +32,7 @@ namespace APICatalogo.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoriaDTO>>> Get([FromQuery] CategoriaParameters categoriaParameters)
         {
-            var categoria =  _uof.CategoriaRepository.GetCategorias(categoriaParameters);
+            var categoria = await  _uof.CategoriaRepository.GetCategorias(categoriaParameters);
 
             var metadata = new
             {

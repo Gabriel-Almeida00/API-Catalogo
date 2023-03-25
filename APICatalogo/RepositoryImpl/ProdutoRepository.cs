@@ -19,9 +19,9 @@ namespace APICatalogo.RepositoryImpl
             return await Get().Where(x => x.Nome.Contains(nome)).ToListAsync();
         }
 
-        public PagedList<Produto> GetProdutos(ProdutosParameters produtosParameters)
+        public async Task<PagedList<Produto>> GetProdutos(ProdutosParameters produtosParameters)
         {
-            return PagedList<Produto>.ToPagedList(Get().OrderBy(on => on.Nome),
+            return await PagedList<Produto>.ToPagedList(Get().OrderBy(on => on.Nome),
                 produtosParameters.PageNumber, produtosParameters.PageSize);
         }
 
