@@ -87,6 +87,7 @@ builder.Services.AddIdentity<IdentityUser,IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -101,4 +102,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseAuthentication();
 app.MapControllers();
+app.UseCors(opt => opt.AllowCredentials());
 app.Run();
