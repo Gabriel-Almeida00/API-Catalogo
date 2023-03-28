@@ -3,8 +3,11 @@ using APICatalogo.DTOs.Mappings;
 using APICatalogo.Implementation;
 using APICatalogo.Repository;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +18,21 @@ builder.Services.AddControllers()
     .AddJsonOptions(options => 
               options.JsonSerializerOptions
                 .ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+builder.Services.AddAuthentication(
+    JwtBearerDefaults.AuthenticationScheme).
+    AddJwtBearer(options => 
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidAudience = builder.Configuration["TokenConfiguration:Audience"],
+        ValidIssuer = builder.Configuration["TokenConfiguration:Issuer"],
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(
+                         Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]))
+    });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
